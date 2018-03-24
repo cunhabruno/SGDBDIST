@@ -1,0 +1,14 @@
+{
+  "turmas": [
+    {
+      "idTurma": 1,
+      "nomeTurma": "Java",
+      "alunos": [
+        {
+          "idAluno": 3,
+          "nomeAluno": "23"
+        }
+      ]
+    }
+  ]
+}

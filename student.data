@@ -1,0 +1,14 @@
+{
+  "alunos": [
+    {
+      "idAluno": 4,
+      "nomeAluno": "Matheus",
+      "turmas": []
+    },
+    {
+      "idAluno": 5,
+      "nomeAluno": "Vitor",
+      "turmas": []
+    }
+  ]
+}
