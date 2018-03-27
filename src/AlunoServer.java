@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.Scanner;
 
 public class AlunoServer {
 
@@ -15,14 +16,14 @@ public class AlunoServer {
 			DatabaseMgmt data = new DatabaseMgmt();
 			while (true) {
 				Socket clientSocketGerenciamento = server.accept();
-				ObjectOutputStream out = new ObjectOutputStream(clientSocketGerenciamento.getOutputStream());
-				//ObjectInputStream in = new ObjectInputStream(clientSocketGerenciamento.getInputStream());
-				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocketGerenciamento.getInputStream()));
+				PrintWriter out = new PrintWriter(clientSocketGerenciamento.getOutputStream());
+				Scanner in = new Scanner(new InputStreamReader(clientSocketGerenciamento.getInputStream()));
 				System.out.println("Conexao requisitada! ");
 				
-				System.out.println(in.readLine().length());
+				System.out.println(in.nextLine());
 				
-				out.writeObject(data.getAllAlunos());
+				out.println(data.getAllAlunos());
+				out.flush();
 				
 				in.close();
 				out.close();

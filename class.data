@@ -9,6 +9,11 @@
           "nomeAluno": "23"
         }
       ]
+    },
+    {
+      "idTurma": 2,
+      "nomeTurma": "SO",
+      "alunos": []
     }
   ]
 }

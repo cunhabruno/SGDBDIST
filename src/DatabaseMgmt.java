@@ -129,7 +129,7 @@ public class DatabaseMgmt {
 		}
 	}
 	
-	public AlunosTabela getAllAlunos() throws IOException {
+	public String getAllAlunos() throws IOException {
 
 		if (studentFile.exists()) {
 			String alunosTabela = "";
@@ -143,7 +143,7 @@ public class DatabaseMgmt {
 			AlunosTabela tabelaAux = new AlunosTabela();
 			tabelaAux = gson.fromJson(alunosTabela, AlunosTabela.class);
 			fr.close();
-			return tabelaAux;
+			return gson.toJson(tabelaAux);
 		} else {
 			System.out.println("Tabela de Alunos nao encontrada!");
 			return null;

@@ -18,10 +18,10 @@ public class mainTEst {
 		try {
 			dataBaseMgmt.adicionaTurma(turmas, t1);
 			dataBaseMgmt.adicionaTurma(turmas, t2);
-			dataBaseMgmt.excluiTurma(2);
+			//dataBaseMgmt.excluiTurma(2);
 			dataBaseMgmt.adicionaAluno(alunos, new Aluno(4, "Matheus"));
 			dataBaseMgmt.adicionaAluno(alunos, new Aluno(5, "Vitor"));
-			dataBaseMgmt.excluiAlunos(3);
+			//dataBaseMgmt.excluiAlunos(3);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

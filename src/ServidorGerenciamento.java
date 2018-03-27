@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ServidorGerenciamento {
 
@@ -16,19 +17,26 @@ public class ServidorGerenciamento {
 
 			while (true) {
 				Socket clientSocket = socketGerenciamento.accept();
-				ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+				
+				PrintWriter out = new PrintWriter (clientSocket.getOutputStream());
+				Scanner in = new Scanner(new InputStreamReader(clientSocket.getInputStream()));
 				
 				Socket alunosSocket = new Socket("localhost", 2222);
 
 				PrintWriter outAlunos = new PrintWriter(alunosSocket.getOutputStream(), true);
-				ObjectInputStream inAlunos = new ObjectInputStream(alunosSocket.getInputStream());
+				Scanner inAlunos = new Scanner(alunosSocket.getInputStream());
 				
-				System.out.println(outAlunos.checkError());
-				out.flush();
+				String inClient = in.nextLine();
+				System.out.println("in do client: " + inClient);
+				outAlunos.println(inClient);
 				outAlunos.flush();
-				outAlunos.print(in.readLine());
-				System.out.println(inAlunos.readUTF());
+				
+				out.println("Test 2");
+				out.flush();
+				String inAlunosStr = "";
+				while(inAlunos.hasNext()) {
+					System.out.println(inAlunos.nextLine());	
+				}
 				outAlunos.close();
 				inAlunos.close();
 				alunosSocket.close();
