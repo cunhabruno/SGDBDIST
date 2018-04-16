@@ -1,18 +1,17 @@
-import java.util.ArrayList;
-
+package turmaServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Turma {
 	private int idTurma;
 	private String nomeTurma;
-	private ArrayList<Aluno> alunos;
+	//private ArrayList<Aluno> alunos;
 	
 	public Turma(int idTurma, String nomeTurma) {
 		super();
 		this.idTurma = idTurma;
 		this.nomeTurma = nomeTurma;
-		alunos = new ArrayList<Aluno>();
+		//alunos = new ArrayList<Aluno>();
 	}
 	
 	public Turma() {
@@ -35,12 +34,12 @@ public class Turma {
 		this.nomeTurma = nomeTurma;
 	}
 
-	public void adicionaAluno(Aluno aluno) {
+/*	public void adicionaAluno(Aluno aluno) {
 		Aluno alunoAux = new Aluno();
 		alunoAux.setIdAluno(aluno.getIdAluno());
 		alunoAux.setNomeAluno(aluno.getNomeAluno());
 		alunos.add(alunoAux);
-	}
+	}*/
 	
 	@Override
 	public String toString() {

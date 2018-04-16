@@ -1,3 +1,4 @@
+package gerenciamento;
 
 public class CodigoRetorno {
 	private int codRetorno;

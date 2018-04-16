@@ -2,18 +2,19 @@
   "turmas": [
     {
       "idTurma": 1,
-      "nomeTurma": "Java",
-      "alunos": [
-        {
-          "idAluno": 3,
-          "nomeAluno": "23"
-        }
-      ]
+      "nomeTurma": "Java"
     },
     {
       "idTurma": 2,
-      "nomeTurma": "SO",
-      "alunos": []
+      "nomeTurma": "SO"
+    },
+    {
+      "idTurma": 3,
+      "nomeTurma": "PSO"
+    },
+    {
+      "idTurma": 4,
+      "nomeTurma": "Banco"
     }
   ]
 }

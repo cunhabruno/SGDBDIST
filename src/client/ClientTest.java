@@ -1,5 +1,5 @@
+package client;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
@@ -12,18 +12,17 @@ public class ClientTest {
 			clientSocket = new Socket("localhost", 2221);
 
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-			// BufferedReader in = new BufferedReader(new
-			// InputStreamReader(clientSocket.getInputStream()));
 			Scanner in = new Scanner(clientSocket.getInputStream());
 
-			out.println("/alunos");
+			out.println("/incluiTurma/4/Banco");
 			out.flush();
-			System.out.println(in.nextLine());
+			while(in.hasNext()) {
+				System.out.println(in.nextLine());	
+			}
 			in.close();
 			out.close();
 			clientSocket.close();
 		} catch (IOException  e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

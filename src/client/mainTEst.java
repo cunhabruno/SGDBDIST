@@ -1,4 +1,11 @@
+package client;
 import java.io.IOException;
+
+import alunoServer.Aluno;
+import alunoServer.AlunosTabela;
+import databaseMgmt.DatabaseMgmt;
+import turmaServer.Turma;
+import turmaServer.TurmasTabela;
 
 public class mainTEst {
 
@@ -6,9 +13,8 @@ public class mainTEst {
 		Aluno a1 = new Aluno(3, "23");
 		Turma t1 = new Turma(1, "Java");
 		Turma t2 = new Turma(2, "SO");
-		t1.adicionaAluno(a1);
-		a1.adicionaTurma(t2);
-		a1.adicionaTurma(t1);
+		a1.adicionaTurma(1);
+		a1.adicionaTurma(2);
 		AlunosTabela alunos = new AlunosTabela();
 		TurmasTabela turmas = new TurmasTabela();
 		alunos.adicionaAluno(a1);
@@ -16,8 +22,9 @@ public class mainTEst {
 		System.out.println(t1);
 		DatabaseMgmt dataBaseMgmt = new DatabaseMgmt();
 		try {
-			dataBaseMgmt.adicionaTurma(turmas, t1);
-			dataBaseMgmt.adicionaTurma(turmas, t2);
+			dataBaseMgmt.adicionaTurma(t1);
+			dataBaseMgmt.adicionaTurma(t2);
+			System.out.println(dataBaseMgmt.buscaTurma(2));
 			//dataBaseMgmt.excluiTurma(2);
 			dataBaseMgmt.adicionaAluno(alunos, new Aluno(4, "Matheus"));
 			dataBaseMgmt.adicionaAluno(alunos, new Aluno(5, "Vitor"));

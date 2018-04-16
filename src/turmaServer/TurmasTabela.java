@@ -1,3 +1,4 @@
+package turmaServer;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,5 +27,17 @@ public class TurmasTabela {
 			}
 		}
 		return false;
+	}
+	
+	public String getTurma(int idTurma) {
+		Iterator<Turma> ite = turmas.iterator();
+		Turma turma;
+		while(ite.hasNext()) {
+			turma = ite.next();
+			if(turma.getIdTurma() == idTurma) {
+				return turma.toString();
+			}
+		}
+		return "";
 	}
 }

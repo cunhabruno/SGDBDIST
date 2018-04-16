@@ -1,3 +1,4 @@
+package alunoServer;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,13 +11,13 @@ public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idAluno;
 	private String nomeAluno;
-	private ArrayList<Turma> turmas;
+	private ArrayList<Integer> turmas;
 	
 	public Aluno(int idAluno, String nomeAluno) {
 		super();
 		this.idAluno = idAluno;
 		this.nomeAluno = nomeAluno;
-		turmas = new ArrayList<Turma>();
+		turmas = new ArrayList<Integer>();
 	}
 	
 	public Aluno() {
@@ -39,11 +40,8 @@ public class Aluno implements Serializable {
 		this.nomeAluno = nomeAluno;
 	}
 
-	public void adicionaTurma(Turma turma) {
-		Turma turmaAux = new Turma();
-		turmaAux.setIdTurma(turma.getIdTurma());
-		turmaAux.setNomeTurma(turma.getNomeTurma());
-		turmas.add(turmaAux);
+	public void adicionaTurma(int turma) {
+		turmas.add(turma);
 	}
 	
 	@Override

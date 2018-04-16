@@ -1,3 +1,4 @@
+package alunoServer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,6 +33,19 @@ public class AlunosTabela implements Serializable {
 		}
 		return false;
 	}
+	
+	public String getAluno(int idAluno) {
+		Iterator<Aluno> ite = alunos.iterator();
+		Aluno aluno;
+		while(ite.hasNext()) {
+			aluno = ite.next();
+			if(aluno.getIdAluno() == idAluno) {
+				return aluno.toString();
+			}
+		}
+		return "";
+	}
+	
 	@Override
 	public String toString() {
 		

@@ -1,28 +1,29 @@
-import java.io.BufferedReader;
+package turmaServer;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
 
-public class AlunoServer {
+import databaseMgmt.Request;
+
+public class TurmaServer {
 
 	public static void main(String[] args) {
 		try {
 			ServerSocket server = new ServerSocket(2222);
-
-			DatabaseMgmt data = new DatabaseMgmt();
+			
+			Request request = new Request();
 			while (true) {
 				Socket clientSocketGerenciamento = server.accept();
 				PrintWriter out = new PrintWriter(clientSocketGerenciamento.getOutputStream());
 				Scanner in = new Scanner(new InputStreamReader(clientSocketGerenciamento.getInputStream()));
 				System.out.println("Conexao requisitada! ");
 				
-				System.out.println(in.nextLine());
+				String requestStr = in.nextLine();
+				System.out.println("Gerenciador requisitou: " + requestStr);
 				
-				out.println(data.getAllAlunos());
+				out.println(request.handleRequest(requestStr));
 				out.flush();
 				
 				in.close();
