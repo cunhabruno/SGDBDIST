@@ -28,22 +28,22 @@ public class Response {
 		this.codigoRetorno = codigoRetorno;
 		switch (codigoRetorno) {
 		case 0:
-			this.descricaoRetorno = "Requisição OK";
+			this.descricaoRetorno = "Requisicao OK";
 			break;
 		case 1:
-			this.descricaoRetorno = "Registro já cadastrado";
+			this.descricaoRetorno = "Registro ja cadastrado";
 			break;
 		case 2:
 			this.descricaoRetorno = "Erro de Relcionmaento";
 			break;
 		case 3:
-			this.descricaoRetorno = "Servidor Indisponível";
+			this.descricaoRetorno = "Servidor Indisponivel";
 			break;
 		case 4:
-			this.descricaoRetorno = "Registro Não Encontrado";
+			this.descricaoRetorno = "Registro Nao Encontrado";
 			break;
 		case 5:
-			this.descricaoRetorno = "Requisição Inválida";
+			this.descricaoRetorno = "Requisicao Invalida";
 			break;
 		default:
 			this.descricaoRetorno = "WTF??";

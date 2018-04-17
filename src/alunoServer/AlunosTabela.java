@@ -46,6 +46,32 @@ public class AlunosTabela implements Serializable {
 		return "";
 	}
 	
+	public Aluno getAlunoObj(int idAluno) {
+		Iterator<Aluno> ite = alunos.iterator();
+		Aluno aluno;
+		while(ite.hasNext()) {
+			aluno = ite.next();
+			if(aluno.getIdAluno() == idAluno) {
+				return aluno;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Aluno> getAlunosInTurma(int idTurma) {
+		Iterator<Aluno> ite = alunos.iterator();
+		Aluno aluno;
+		ArrayList<Aluno> alunoArr = new ArrayList<Aluno>();
+		while(ite.hasNext()) {
+			aluno = ite.next();
+			if(aluno.getTurmas().contains(idTurma)) {
+				aluno.setTurmas(null);
+				alunoArr.add(aluno);
+			}
+		}
+		return alunoArr;
+	}
+	
 	@Override
 	public String toString() {
 		

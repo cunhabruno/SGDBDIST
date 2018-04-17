@@ -1,30 +1,33 @@
 package gerenciamento;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Request {
-	Socket alunosSocket;
-	Socket turmasSocket;
+	public String handleRequest(String requestString) throws IOException, ClassNotFoundException {
 
-	public void handleRequest(ObjectOutputStream out, BufferedReader in) throws IOException, ClassNotFoundException {
-		String requestString = in.readLine();
-
-		System.out.println(requestString);
-		if (requestString.equals("/alunos")) {
-			alunosSocket = new Socket("localhost", 2222);
+		if (requestString.startsWith("/incluiAluno")) {
+			Socket alunosSocket = new Socket("localhost", 2222);
 
 			PrintWriter outAlunos = new PrintWriter(alunosSocket.getOutputStream(), true);
-			BufferedReader inAlunos = new BufferedReader(new InputStreamReader(alunosSocket.getInputStream()));
+			Scanner inAlunos = new Scanner(alunosSocket.getInputStream());
 			
-			outAlunos.print(requestString);
-			System.out.println(inAlunos.readLine());
+			outAlunos.println(requestString);
+			outAlunos.flush();
+			
+			String inAlunosStr = "";
+			while(inAlunos.hasNext()) {
+				inAlunosStr += inAlunos.nextLine() + '\n';	
+			}
+			
 			outAlunos.close();
 			inAlunos.close();
 			alunosSocket.close();
+			
+			return inAlunosStr;
 		}
+		
+		return "";
 	}
 }

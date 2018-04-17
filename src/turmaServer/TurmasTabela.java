@@ -2,6 +2,8 @@ package turmaServer;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import alunoServer.Aluno;
+
 public class TurmasTabela {
 	private ArrayList<Turma> turmas = new ArrayList<Turma>();
 	
@@ -16,6 +18,23 @@ public class TurmasTabela {
 			}
 		}
 		return false;
+	}
+	
+	public boolean checkTurmasExistem(ArrayList<Integer> turmasList) {
+		boolean existe = false;
+		for (Integer idTurma : turmasList) {
+			existe = false;
+			for(Turma turma : turmas) {
+				if(turma.getIdTurma() == idTurma) {
+					existe = true;
+				}
+			}
+			if(!existe) {
+				return false;
+			}
+		}
+
+		return !turmas.isEmpty();
 	}
 	
 	public boolean excluiTurma(int idTurma) {
@@ -39,5 +58,25 @@ public class TurmasTabela {
 			}
 		}
 		return "";
+	}
+	
+	public Turma getTurmaObj(int idTurma) {
+		Iterator<Turma> ite = turmas.iterator();
+		Turma turma;
+		while(ite.hasNext()) {
+			turma = ite.next();
+			if(turma.getIdTurma() == idTurma) {
+				return turma;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Turma> getTurmasInAluno(Aluno aluno) {
+		ArrayList<Turma> turmaArr = new ArrayList<Turma>();
+		for (Integer turma : aluno.getTurmas()) {
+			turmaArr.add(this.getTurmaObj(turma));
+		}
+		return turmaArr;
 	}
 }

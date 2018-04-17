@@ -13,6 +13,14 @@ public class Aluno implements Serializable {
 	private String nomeAluno;
 	private ArrayList<Integer> turmas;
 	
+	public ArrayList<Integer> getTurmas() {
+		return turmas;
+	}
+
+	public void setTurmas(ArrayList<Integer> turmas) {
+		this.turmas = turmas;
+	}
+
 	public Aluno(int idAluno, String nomeAluno) {
 		super();
 		this.idAluno = idAluno;
@@ -40,8 +48,10 @@ public class Aluno implements Serializable {
 		this.nomeAluno = nomeAluno;
 	}
 
-	public void adicionaTurma(int turma) {
-		turmas.add(turma);
+	public void adicionaTurma(String turmasArr[]) {
+		for (String turma : turmasArr) {
+			turmas.add(Integer.parseInt(turma));
+		}
 	}
 	
 	@Override
