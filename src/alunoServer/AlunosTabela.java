@@ -10,6 +10,14 @@ public class AlunosTabela implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	
+	public ArrayList<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(ArrayList<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+
 	public void adicionaAluno (Aluno aluno) {
 		alunos.add(aluno);
 	}

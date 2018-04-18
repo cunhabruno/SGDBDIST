@@ -11,7 +11,7 @@ public class TurmaServer {
 
 	public static void main(String[] args) {
 		try {
-			ServerSocket server = new ServerSocket(2222);
+			ServerSocket server = new ServerSocket(2223);
 			
 			Request request = new Request();
 			while (true) {

@@ -27,11 +27,11 @@ public class Request {
 			int response = data.adicionaAluno(novoAluno);
 			return new Response(response).toString();
 			
-		} else if(requestStr.startsWith("/turma")) {
+		} else if(requestStr.startsWith("/turma/")) {
 			int idTurma = Integer.parseInt(requestStr.split("/")[2]);
 			String response = data.buscaTurma(idTurma);
 			return response;
-		} else if(requestStr.startsWith("/aluno")) {
+		} else if(requestStr.startsWith("/aluno/")) {
 			int idAluno = Integer.parseInt(requestStr.split("/")[2]);
 			String response = data.buscaAluno(idAluno);
 			return response;

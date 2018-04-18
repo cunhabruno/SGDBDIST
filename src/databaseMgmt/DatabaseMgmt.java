@@ -185,7 +185,7 @@ public class DatabaseMgmt {
 					Aluno alunoEncontrado = tabelaAuxAlunos.getAlunoObj(idAluno);
 					AlunoResponse alunoResponse = new AlunoResponse(alunoEncontrado.getIdAluno(),
 							alunoEncontrado.getNomeAluno(), tabelaAuxTurmas.getTurmasInAluno(alunoEncontrado));
-					
+
 					return alunoResponse.toString();
 				} else {
 					return new Response(3).toString();
@@ -206,12 +206,29 @@ public class DatabaseMgmt {
 		if (studentFile.exists()) {
 			String alunosTabela = this.getFileContent(studentFile);
 
-			AlunosTabela tabelaAux = new AlunosTabela();
-			tabelaAux = gson.fromJson(alunosTabela, AlunosTabela.class);
-			return gson.toJson(tabelaAux);
+			AlunosTabela tabelaAuxAlunos = new AlunosTabela();
+			tabelaAuxAlunos = gson.fromJson(alunosTabela, AlunosTabela.class);
+
+			if (classFile.exists()) {
+				String turmasTabela = this.getFileContent(classFile);
+
+				TurmasTabela tabelaAuxTurmas = new TurmasTabela();
+				tabelaAuxTurmas = gson.fromJson(turmasTabela, TurmasTabela.class);
+
+				ArrayList<AlunoResponse> alunoResponse = new ArrayList<AlunoResponse>();
+
+				for (Aluno alunoEncontrado : tabelaAuxAlunos.getAlunos()) {
+					alunoResponse.add(new AlunoResponse(alunoEncontrado.getIdAluno(), alunoEncontrado.getNomeAluno(),
+							tabelaAuxTurmas.getTurmasInAluno(alunoEncontrado)));
+				}
+				JsonObject jsonObject = new JsonObject();
+				jsonObject.add("alunos", gson.toJsonTree(alunoResponse));
+				return gson.toJson(jsonObject);
+			} else {
+				return new Response(3).toString();			}
 		} else {
 			System.out.println("Tabela de Alunos nao encontrada!");
-			return null;
+			return new Response(3).toString();
 		}
 	}
 
