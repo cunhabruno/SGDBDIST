@@ -3,16 +3,12 @@
     {
       "idAluno": 1,
       "nomeAluno": "Tales Viegas",
-      "turmas": [
-        1
-      ]
+      "turmas": []
     },
     {
       "idAluno": 2,
       "nomeAluno": "Bruno",
-      "turmas": [
-        1
-      ]
+      "turmas": []
     },
     {
       "idAluno": 3,

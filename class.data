@@ -1,10 +1,6 @@
 {
   "turmas": [
     {
-      "idTurma": 1,
-      "nomeTurma": "Banco de Dados"
-    },
-    {
       "idTurma": 3,
       "nomeTurma": "Algo"
     }

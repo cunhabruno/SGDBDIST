@@ -14,7 +14,7 @@ public class ClientTest {
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 			Scanner in = new Scanner(clientSocket.getInputStream());
 
-			out.println("/turma/1");
+			out.println("/apagaTurma/1");
 			out.flush();
 			while(in.hasNext()) {
 				System.out.println(in.nextLine());	

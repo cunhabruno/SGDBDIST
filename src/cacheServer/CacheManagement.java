@@ -22,13 +22,13 @@ public class CacheManagement {
 			while (ite.hasNext()) {
 				cacheData = ite.next();
 				if (cacheData.getRequestName().equals(requestStr)) {
-					if(cacheData.timedOut(10000)){
+					if (cacheData.timedOut(10000)) {
 						System.out.println("Removido");
 						ite.remove();
 						break;
 					} else {
 						System.out.println("Peguei no cache");
-						return cacheData.getValue();	
+						return cacheData.getValue();
 					}
 				}
 			}
@@ -38,6 +38,26 @@ public class CacheManagement {
 			newData.setAddedTime(System.currentTimeMillis());
 			cachedObjects.add(newData);
 			return alunosData;
+		} else if (requestStr.matches("\\/apagaAluno\\/[0-9]+$")) {
+			int idAluno = Integer.parseInt(requestStr.split("/")[2]);
+			while (ite.hasNext()) {
+				cacheData = ite.next();
+				if (cacheData.getRequestName().equals("/aluno/" + idAluno)) {
+					System.out.println("Removido por Exclusao");
+					ite.remove();
+				}
+			}
+			return this.makeRequestToGerenciador(requestStr);
+		} else if (requestStr.matches("\\/apagaTurma\\/[0-9]+$")) {
+			int idTurma = Integer.parseInt(requestStr.split("/")[2]);
+			while (ite.hasNext()) {
+				cacheData = ite.next();
+				if (cacheData.getRequestName().equals("/turma/" + idTurma)) {
+					System.out.println("Removido por Exclusao");
+					ite.remove();
+				}
+			}
+			return this.makeRequestToGerenciador(requestStr);
 		}
 		return this.makeRequestToGerenciador(requestStr);
 	}
