@@ -9,12 +9,12 @@ public class ClientTest {
 	public static void main(String[] args) {
 		Socket clientSocket;
 		try {
-			clientSocket = new Socket("localhost", 2221);
+			clientSocket = new Socket("localhost", 2000);
 
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 			Scanner in = new Scanner(clientSocket.getInputStream());
 
-			out.println("/alunos");
+			out.println("/turma/1");
 			out.flush();
 			while(in.hasNext()) {
 				System.out.println(in.nextLine());	

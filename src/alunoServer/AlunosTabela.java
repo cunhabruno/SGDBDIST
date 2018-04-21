@@ -67,17 +67,27 @@ public class AlunosTabela implements Serializable {
 	}
 	
 	public ArrayList<Aluno> getAlunosInTurma(int idTurma) {
-		Iterator<Aluno> ite = alunos.iterator();
-		Aluno aluno;
+		Iterator<Aluno> ite = this.alunos.iterator();
 		ArrayList<Aluno> alunoArr = new ArrayList<Aluno>();
 		while(ite.hasNext()) {
-			aluno = ite.next();
+			Aluno aluno = new Aluno(ite.next());
+			System.out.println(aluno);
 			if(aluno.getTurmas().contains(idTurma)) {
 				aluno.setTurmas(null);
 				alunoArr.add(aluno);
 			}
 		}
 		return alunoArr;
+	}
+	
+	public void removeTurmaFromAlunos(int idTurma) {
+		Iterator<Aluno> ite = this.alunos.iterator();
+		while(ite.hasNext()) {
+			Aluno aluno = ite.next();
+			if(aluno.getTurmas().contains(idTurma)) {
+				aluno.removeTurma(idTurma);
+			}
+		}
 	}
 	
 	@Override

@@ -17,7 +17,28 @@ public class AlunoResponse {
 		this.nomeAluno = nomeAluno;
 		this.turmas = turmas;
 	}
+	public AlunoResponse() {
+		super();
+	}
 	
+	public int getIdAluno() {
+		return idAluno;
+	}
+	public void setIdAluno(int idAluno) {
+		this.idAluno = idAluno;
+	}
+	public String getNomeAluno() {
+		return nomeAluno;
+	}
+	public void setNomeAluno(String nomeAluno) {
+		this.nomeAluno = nomeAluno;
+	}
+	public ArrayList<Turma> getTurmas() {
+		return turmas;
+	}
+	public void setTurmas(ArrayList<Turma> turmas) {
+		this.turmas = turmas;
+	}
 	@Override
 	public String toString() {
 		GsonBuilder builder = new GsonBuilder();

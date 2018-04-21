@@ -4,15 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Response {
-	private int codigoRetorno;
+	private int codRetorno;
 	private String descricaoRetorno;
 
 	public int getCodigoRetorno() {
-		return codigoRetorno;
+		return codRetorno;
 	}
 
 	public void setCodigoRetorno(int codigoRetorno) {
-		this.codigoRetorno = codigoRetorno;
+		this.codRetorno = codigoRetorno;
 	}
 
 	public String getDescricaoRetorno() {
@@ -25,7 +25,7 @@ public class Response {
 
 	public Response(int codigoRetorno) {
 		super();
-		this.codigoRetorno = codigoRetorno;
+		this.codRetorno = codigoRetorno;
 		switch (codigoRetorno) {
 		case 0:
 			this.descricaoRetorno = "Requisicao OK";

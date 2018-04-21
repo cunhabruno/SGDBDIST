@@ -1,6 +1,7 @@
 package alunoServer;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.google.gson.*;
 
@@ -13,6 +14,12 @@ public class Aluno implements Serializable {
 	private String nomeAluno;
 	private ArrayList<Integer> turmas;
 	
+	public Aluno(Aluno aluno) {
+		super();
+		this.idAluno = aluno.idAluno;
+		this.nomeAluno = aluno.nomeAluno;
+		this.turmas = aluno.turmas;
+	}
 	public ArrayList<Integer> getTurmas() {
 		return turmas;
 	}
@@ -25,7 +32,7 @@ public class Aluno implements Serializable {
 		super();
 		this.idAluno = idAluno;
 		this.nomeAluno = nomeAluno;
-		turmas = new ArrayList<Integer>();
+		this.turmas = new ArrayList<Integer>();
 	}
 	
 	public Aluno() {
@@ -52,6 +59,17 @@ public class Aluno implements Serializable {
 		for (String turma : turmasArr) {
 			turmas.add(Integer.parseInt(turma));
 		}
+	}
+	
+	public boolean removeTurma(int idTurma) {
+		Iterator<Integer> ite = turmas.iterator();
+		while(ite.hasNext()) {
+			if(ite.next() == idTurma) {
+				ite.remove();
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override

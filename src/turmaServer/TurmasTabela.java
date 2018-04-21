@@ -7,6 +7,14 @@ import alunoServer.Aluno;
 public class TurmasTabela {
 	private ArrayList<Turma> turmas = new ArrayList<Turma>();
 	
+	public ArrayList<Turma> getTurmas() {
+		return turmas;
+	}
+
+	public void setTurmas(ArrayList<Turma> turmas) {
+		this.turmas = turmas;
+	}
+
 	public void adicionaTurma (Turma turma) {
 		turmas.add(turma);
 	}

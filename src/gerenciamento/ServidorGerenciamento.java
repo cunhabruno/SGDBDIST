@@ -20,30 +20,12 @@ public class ServidorGerenciamento {
 				PrintWriter outCliente = new PrintWriter (clientSocket.getOutputStream());
 				Scanner inCliente = new Scanner(new InputStreamReader(clientSocket.getInputStream()));
 				
-				//Socket alunosSocket = new Socket("localhost", 2222);
-
-				//PrintWriter outAlunos = new PrintWriter(alunosSocket.getOutputStream(), true);
-				//Scanner inAlunos = new Scanner(alunosSocket.getInputStream());
-				
 				String inClient = inCliente.nextLine();
 				System.out.println("Cliente requisitou: " + inClient);
-				//outAlunos.println(inClient);
-				//outAlunos.flush();
 				
-				/*String inAlunosStr = "";
-				while(inAlunos.hasNext()) {
-					inAlunosStr += inAlunos.nextLine() + '\n';	
-				}*/
 				String inDataBaseStr = requet.handleRequest(inClient);
 				outCliente.println(inDataBaseStr);
 				outCliente.flush();
-/*				String inAlunosStr = "";
-				while(inAlunos.hasNext()) {
-					System.out.println(inAlunos.nextLine());	
-				}*/
-/*				outAlunos.close();
-				inAlunos.close();
-				alunosSocket.close();*/
 				
 				inCliente.close();
 				outCliente.close();
