@@ -6,12 +6,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ServidorGerenciamento {
+import cacheServer.CacheServer;
+import databaseMgmt.ConfigFile;
+
+public class ServidorGerenciamento implements Runnable{
 
 	public static void main(String[] args) {
-		try {
-			ServerSocket socketGerenciamento = new ServerSocket(2221);
+		Thread t = new Thread(new ServidorGerenciamento());
+		t.start();
+	}
 
+	@Override
+	public void run() {
+		ConfigFile configFile = new ConfigFile("src/gerenciamento/gerenciamento.config");
+		try {
+			ServerSocket socketGerenciamento = new ServerSocket(configFile.getPort());
+			System.out.println("Gerenciamento server running on port " + socketGerenciamento.getLocalPort());
 			while (true) {
 				Socket clientSocket = socketGerenciamento.accept();
 				
@@ -35,6 +45,7 @@ public class ServidorGerenciamento {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 }

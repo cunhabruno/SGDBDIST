@@ -12,13 +12,13 @@ public class Request {
 			return data.getAllAlunos();
 		} else if(requestStr.equals("/turmas")) {
 			return data.getAllTurmas();
-		} else if(requestStr.matches("\\/incluiTurma\\/[0-9]\\/[a-zA-Z0-9\\s]+$")) {
+		} else if(requestStr.matches("\\/incluiTurma\\/[0-9]+\\/[a-zA-Z0-9\\s]+$")) {
 			int idTurma = Integer.parseInt(requestStr.split("/")[2]);
 			String nometurma = requestStr.split("/")[3];
 			int response = data.adicionaTurma(new Turma(idTurma, nometurma));
 			return new Response(response).toString();
 			
-		} else if(requestStr.matches("\\/incluiAluno\\/[0-9]\\/[a-zA-Z0-9\\s]+\\/[0-9]+(\\,*[0-9])*$")) {
+		} else if(requestStr.matches("\\/incluiAluno\\/[0-9]+\\/[a-zA-Z0-9\\s]+\\/[0-9]+(\\,*[0-9])*$")) {
 			int idAluno = Integer.parseInt(requestStr.split("/")[2]);
 			String nomeAluno = requestStr.split("/")[3];
 			String turmasStr = requestStr.split("/")[4];

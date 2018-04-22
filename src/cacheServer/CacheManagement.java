@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import databaseMgmt.ConfigFile;
+
 public class CacheManagement {
 	private static ArrayList<CachedObject> cachedObjects = new ArrayList<CachedObject>();
-
+	ConfigFile configFile = new ConfigFile("src/cacheServer/cache.config");
 	public ArrayList<CachedObject> getCachedObjects() {
 		return cachedObjects;
 	}
@@ -22,8 +24,8 @@ public class CacheManagement {
 			while (ite.hasNext()) {
 				cacheData = ite.next();
 				if (cacheData.getRequestName().equals(requestStr)) {
-					if (cacheData.timedOut(10000)) {
-						System.out.println("Removido");
+					if (cacheData.timedOut(this.configFile.getCacheTimeOut())) {
+						System.out.println("Removido Por timeout");
 						ite.remove();
 						break;
 					} else {
@@ -64,7 +66,7 @@ public class CacheManagement {
 
 	private String makeRequestToGerenciador(String requestString) {
 		try {
-			Socket serverGerenciamento = new Socket("localhost", 2221);
+			Socket serverGerenciamento = new Socket(this.configFile.getManagerServerHost(), this.configFile.getManagerServerPort());
 
 			PrintWriter outGer = new PrintWriter(serverGerenciamento.getOutputStream(), true);
 			Scanner inGer = new Scanner(serverGerenciamento.getInputStream());

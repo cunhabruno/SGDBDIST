@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import alunoServer.Aluno;
 import alunoServer.AlunosTabela;
 import databaseMgmt.AlunoResponse;
+import databaseMgmt.ConfigFile;
 import databaseMgmt.TurmaResponse;
 import turmaServer.Turma;
 import turmaServer.TurmasTabela;
@@ -21,7 +22,8 @@ public class Request {
 	private Socket dbSocket;
 	private GsonBuilder builder = new GsonBuilder();
 	private Gson gson = builder.setPrettyPrinting().create();
-
+	ConfigFile configFile = new ConfigFile("src/gerenciamento/gerenciamento.config");
+	
 	public String handleRequest(String requestString) {
 
 		if (requestString.equals("/alunos")) {
@@ -122,7 +124,7 @@ public class Request {
 		if (requestString.startsWith("/incluiAluno") || requestString.startsWith("/apagaAluno")
 				|| requestString.startsWith("/aluno")) {
 			try {
-				dbSocket = new Socket("localhost", 2222);
+				dbSocket = new Socket(this.configFile.getStudentServerHost(), this.configFile.getStudentServerPort());
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -132,14 +134,19 @@ public class Request {
 		} else if (requestString.startsWith("/incluiTurma") || requestString.startsWith("/apagaTurma")
 				|| requestString.startsWith("/turma")) {
 			try {
-				dbSocket = new Socket("localhost", 2223);
+				dbSocket = new Socket(this.configFile.getClassServerHost(), this.configFile.getClassServerPort());
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
-			dbSocket = null;
+			try {
+				dbSocket = new Socket(this.configFile.getClassServerHost(), this.configFile.getClassServerPort());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -14,13 +14,14 @@ import turmaServer.Turma;
 import turmaServer.TurmasTabela;
 
 public class DatabaseMgmt {
+	ConfigFile configFileAlunos = new ConfigFile("src/alunoServer/alunos.config");
+	ConfigFile configFileTurmas = new ConfigFile("src/turmaServer/turmas.config");
 	private GsonBuilder builder = new GsonBuilder();
 	private Gson gson = builder.setPrettyPrinting().create();
-	private File studentFile = new File("student.data");
-	private File classFile = new File("class.data");
+	private File studentFile = new File(this.configFileAlunos.getDataFile());
+	private File classFile = new File(this.configFileTurmas.getDataFile());
 	TurmasTabela turmas = new TurmasTabela();
 	AlunosTabela alunos = new AlunosTabela();
-
 	public int adicionaAluno(Aluno novoAluno) throws IOException {
 
 		if (studentFile.exists() && classFile.exists()) {
