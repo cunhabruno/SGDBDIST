@@ -16,7 +16,12 @@ public class TurmaResponse {
 		super();
 		this.idTurma = idTurma;
 		this.nomeTurma = nomeTurma;
+		
 		this.alunos = alunos;
+	}
+	
+	public TurmaResponse() {
+		super();
 	}
 	public int getIdTurma() {
 		return idTurma;

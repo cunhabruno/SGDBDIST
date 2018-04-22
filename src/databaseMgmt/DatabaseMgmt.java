@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.google.gson.*;
 
@@ -15,13 +14,14 @@ import turmaServer.Turma;
 import turmaServer.TurmasTabela;
 
 public class DatabaseMgmt {
+	ConfigFile configFileAlunos = new ConfigFile("src/alunoServer/alunos.config");
+	ConfigFile configFileTurmas = new ConfigFile("src/turmaServer/turmas.config");
 	private GsonBuilder builder = new GsonBuilder();
 	private Gson gson = builder.setPrettyPrinting().create();
-	private File studentFile = new File("student.data");
-	private File classFile = new File("class.data");
+	private File studentFile = new File(this.configFileAlunos.getDataFile());
+	private File classFile = new File(this.configFileTurmas.getDataFile());
 	TurmasTabela turmas = new TurmasTabela();
 	AlunosTabela alunos = new AlunosTabela();
-
 	public int adicionaAluno(Aluno novoAluno) throws IOException {
 
 		if (studentFile.exists() && classFile.exists()) {
@@ -90,7 +90,7 @@ public class DatabaseMgmt {
 		}
 	}
 
-	public void excluiTurma(int turmaARemover) throws IOException {
+	public String excluiTurma(int turmaARemover) throws IOException {
 
 		if (classFile.exists()) {
 			String turmasTabela = this.getFileContent(classFile);
@@ -98,23 +98,40 @@ public class DatabaseMgmt {
 			TurmasTabela tabelaAux = new TurmasTabela();
 			tabelaAux = gson.fromJson(turmasTabela, TurmasTabela.class);
 			if (tabelaAux.checkTurmaExiste(turmaARemover)) {
-				FileWriter writer = new FileWriter(classFile);
-				tabelaAux.excluiTurma(turmaARemover);
-				writer.write(gson.toJson(tabelaAux));
-				writer.close();
+				if (studentFile.exists()) {
+					String alunosTabela = this.getFileContent(studentFile);
+
+					AlunosTabela alunosTabelaObj = new AlunosTabela();
+					alunosTabelaObj = gson.fromJson(alunosTabela, AlunosTabela.class);
+
+					alunosTabelaObj.removeTurmaFromAlunos(turmaARemover);
+					FileWriter writerAlunos = new FileWriter(studentFile);
+					writerAlunos.write(gson.toJson(alunosTabelaObj));
+					writerAlunos.close();
+
+					FileWriter writer = new FileWriter(classFile);
+					tabelaAux.excluiTurma(turmaARemover);
+					writer.write(gson.toJson(tabelaAux));
+					writer.close();
+					return new Response(0).toString();
+				} else {
+					return new Response(2).toString();
+				}
 			} else {
 				System.out.println("Turma " + turmaARemover + " não existe");
+				return new Response(4).toString();
 			}
 
 		} else {
 			System.out.println("Tabela de Turmas nao encontrada!");
+			return new Response(2).toString();
 		}
 	}
 
-	public void excluiAlunos(int alunoARemover) throws IOException {
+	public String excluiAluno(int alunoARemover) throws IOException {
 
 		if (studentFile.exists()) {
-			String alunosTabela = this.getFileContent(classFile);
+			String alunosTabela = this.getFileContent(studentFile);
 
 			AlunosTabela tabelaAux = new AlunosTabela();
 			tabelaAux = gson.fromJson(alunosTabela, AlunosTabela.class);
@@ -123,12 +140,15 @@ public class DatabaseMgmt {
 				tabelaAux.excluiAluno(alunoARemover);
 				writer.write(gson.toJson(tabelaAux));
 				writer.close();
+				return new Response(0).toString();
 			} else {
 				System.out.println("Aluno " + alunoARemover + " não existe");
+				return new Response(4).toString();
 			}
 
 		} else {
 			System.out.println("Tabela de Turmas nao encontrada!");
+			return new Response(2).toString();
 		}
 	}
 
@@ -140,23 +160,10 @@ public class DatabaseMgmt {
 			TurmasTabela tabelaAuxTurmas = new TurmasTabela();
 			tabelaAuxTurmas = gson.fromJson(turmasTabela, TurmasTabela.class);
 			if (tabelaAuxTurmas.checkTurmaExiste(idTurma)) {
-				if (studentFile.exists()) {
-					String alunosTabela = this.getFileContent(studentFile);
 
-					AlunosTabela tabelaAuxAlunos = new AlunosTabela();
-					tabelaAuxAlunos = gson.fromJson(alunosTabela, AlunosTabela.class);
+				Turma turmaEncontrada = tabelaAuxTurmas.getTurmaObj(idTurma);
 
-					ArrayList<Aluno> alunosNaTurma = tabelaAuxAlunos.getAlunosInTurma(idTurma);
-					Turma turmaEncontrada = tabelaAuxTurmas.getTurmaObj(idTurma);
-
-					TurmaResponse turmaResponse = new TurmaResponse(turmaEncontrada.getIdTurma(),
-							turmaEncontrada.getNomeTurma(), alunosNaTurma);
-
-					return turmaResponse.toString();
-
-				} else {
-					return tabelaAuxTurmas.getTurma(idTurma);
-				}
+				return turmaEncontrada.toString();
 			} else {
 				System.out.println("Turma " + idTurma + " nao existe");
 				return new Response(4).toString();
@@ -164,7 +171,7 @@ public class DatabaseMgmt {
 
 		} else {
 			System.out.println("Tabela de Turmas nao encontrada!");
-			return "";
+			return new Response(2).toString();
 		}
 	}
 
@@ -176,20 +183,9 @@ public class DatabaseMgmt {
 			AlunosTabela tabelaAuxAlunos = new AlunosTabela();
 			tabelaAuxAlunos = gson.fromJson(alunosTabela, AlunosTabela.class);
 			if (tabelaAuxAlunos.checkAlunoExiste(idAluno)) {
-				if (classFile.exists()) {
-					String turmasTabela = this.getFileContent(classFile);
+				Aluno alunoEncontrado = tabelaAuxAlunos.getAlunoObj(idAluno);
 
-					TurmasTabela tabelaAuxTurmas = new TurmasTabela();
-					tabelaAuxTurmas = gson.fromJson(turmasTabela, TurmasTabela.class);
-
-					Aluno alunoEncontrado = tabelaAuxAlunos.getAlunoObj(idAluno);
-					AlunoResponse alunoResponse = new AlunoResponse(alunoEncontrado.getIdAluno(),
-							alunoEncontrado.getNomeAluno(), tabelaAuxTurmas.getTurmasInAluno(alunoEncontrado));
-
-					return alunoResponse.toString();
-				} else {
-					return new Response(3).toString();
-				}
+				return alunoEncontrado.toString();
 			} else {
 				System.out.println("Aluno " + idAluno + " não existe");
 				return new Response(4).toString();
@@ -209,25 +205,24 @@ public class DatabaseMgmt {
 			AlunosTabela tabelaAuxAlunos = new AlunosTabela();
 			tabelaAuxAlunos = gson.fromJson(alunosTabela, AlunosTabela.class);
 
-			if (classFile.exists()) {
-				String turmasTabela = this.getFileContent(classFile);
-
-				TurmasTabela tabelaAuxTurmas = new TurmasTabela();
-				tabelaAuxTurmas = gson.fromJson(turmasTabela, TurmasTabela.class);
-
-				ArrayList<AlunoResponse> alunoResponse = new ArrayList<AlunoResponse>();
-
-				for (Aluno alunoEncontrado : tabelaAuxAlunos.getAlunos()) {
-					alunoResponse.add(new AlunoResponse(alunoEncontrado.getIdAluno(), alunoEncontrado.getNomeAluno(),
-							tabelaAuxTurmas.getTurmasInAluno(alunoEncontrado)));
-				}
-				JsonObject jsonObject = new JsonObject();
-				jsonObject.add("alunos", gson.toJsonTree(alunoResponse));
-				return gson.toJson(jsonObject);
-			} else {
-				return new Response(3).toString();			}
+			return gson.toJson(tabelaAuxAlunos);
 		} else {
 			System.out.println("Tabela de Alunos nao encontrada!");
+			return new Response(3).toString();
+		}
+	}
+
+	public String getAllTurmas() {
+
+		if (classFile.exists()) {
+			String turmasTabela = this.getFileContent(classFile);
+
+			TurmasTabela tabelaAuxTurmas = new TurmasTabela();
+			tabelaAuxTurmas = gson.fromJson(turmasTabela, TurmasTabela.class);
+
+			return gson.toJson(tabelaAuxTurmas);
+		} else {
+			System.out.println("Tabela de Turmas nao encontrada!");
 			return new Response(3).toString();
 		}
 	}

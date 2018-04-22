@@ -6,12 +6,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ServidorGerenciamento {
+import cacheServer.CacheServer;
+import databaseMgmt.ConfigFile;
+
+public class ServidorGerenciamento implements Runnable{
 
 	public static void main(String[] args) {
-		try {
-			ServerSocket socketGerenciamento = new ServerSocket(2221);
+		Thread t = new Thread(new ServidorGerenciamento());
+		t.start();
+	}
 
+	@Override
+	public void run() {
+		ConfigFile configFile = new ConfigFile("src/gerenciamento/gerenciamento.config");
+		try {
+			ServerSocket socketGerenciamento = new ServerSocket(configFile.getPort());
+			System.out.println("Gerenciamento server running on port " + socketGerenciamento.getLocalPort());
 			while (true) {
 				Socket clientSocket = socketGerenciamento.accept();
 				
@@ -20,30 +30,12 @@ public class ServidorGerenciamento {
 				PrintWriter outCliente = new PrintWriter (clientSocket.getOutputStream());
 				Scanner inCliente = new Scanner(new InputStreamReader(clientSocket.getInputStream()));
 				
-				//Socket alunosSocket = new Socket("localhost", 2222);
-
-				//PrintWriter outAlunos = new PrintWriter(alunosSocket.getOutputStream(), true);
-				//Scanner inAlunos = new Scanner(alunosSocket.getInputStream());
-				
 				String inClient = inCliente.nextLine();
 				System.out.println("Cliente requisitou: " + inClient);
-				//outAlunos.println(inClient);
-				//outAlunos.flush();
 				
-				/*String inAlunosStr = "";
-				while(inAlunos.hasNext()) {
-					inAlunosStr += inAlunos.nextLine() + '\n';	
-				}*/
 				String inDataBaseStr = requet.handleRequest(inClient);
 				outCliente.println(inDataBaseStr);
 				outCliente.flush();
-/*				String inAlunosStr = "";
-				while(inAlunos.hasNext()) {
-					System.out.println(inAlunos.nextLine());	
-				}*/
-/*				outAlunos.close();
-				inAlunos.close();
-				alunosSocket.close();*/
 				
 				inCliente.close();
 				outCliente.close();
@@ -53,6 +45,7 @@ public class ServidorGerenciamento {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 }
